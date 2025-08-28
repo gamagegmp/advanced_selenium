@@ -1,0 +1,8 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="FunctionalSuite">
+    <test name="Functional Tests">
+        <packages>
+            <package name="com.adsel.functional"/>
+        </packages>
+    </test>
+</suite>
