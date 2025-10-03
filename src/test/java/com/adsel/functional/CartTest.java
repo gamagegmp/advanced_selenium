@@ -2,6 +2,7 @@ package com.adsel.functional;
 
 import com.adsel.base.BaseTest;
 import com.adsel.pages.CartPage;
+import com.adsel.pages.CheckoutPage;
 import com.adsel.pages.ProductPage;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
@@ -10,11 +11,13 @@ import org.testng.annotations.Test;
 public class CartTest extends BaseTest {
     private CartPage cartPage;
     private ProductPage productPage;
+    private CheckoutPage checkoutPage;
 
     @BeforeMethod(alwaysRun = true)
     public void loginToProductPage(){
         this.productPage = new ProductPage(driver);
         this.cartPage = new CartPage(driver);
+        this.checkoutPage = new CheckoutPage(driver);
         loginAsStandardUser();
     }
     @Test(groups = {"smoke", "regression"})
@@ -56,6 +59,45 @@ public class CartTest extends BaseTest {
 
         Assert.assertEquals(cartPage.getTitle(), "Your Cart", "Cart Page Title Error!");
     }
+    @Test(groups = {"smoke", "regression"})
+    public void checkFunctionalityOfContinueShoppingButton(){
+        productPage.clickCartIcon();
+        cartPage.clickContinueShoppingButton();
 
+        Assert.assertEquals(productPage.getTitle(), "Products", "Continue Shopping Button Functioning Error!");
+    }
+    @Test(groups = {"smoke", "regression"})
+    public void checkFunctionalityOfCheckoutButton(){
+        productPage.clickCartIcon();
+        cartPage.clickCheckoutButton();
+
+        Assert.assertEquals(checkoutPage.getTitle(), "Checkout: Your Information", "Checkout Button Functionality Error!");
+    }
+    @Test(groups = {"smoke", "regression"})
+    public void checkVisibilityOfQtyLable(){
+        productPage.clickCartIcon();
+
+        Assert.assertTrue(cartPage.isQtyLabelVisible(), "QTY Lable Visibility Error!");
+    }
+    @Test(groups = {"smoke", "regression"})
+    public void checkVisibilityOfDescriptionLable(){
+        productPage.clickCartIcon();
+
+        Assert.assertTrue(cartPage.isDescriptionLableVisible(), "Description Lable Visibility Error!");
+    }
+    @Test(groups = {"smoke", "regression"})
+    public void checkVisibilityOfCartItem(){
+        productPage.clickAddToCartButtonBackpack();
+        productPage.clickCartIcon();
+
+        Assert.assertTrue(cartPage.isCartItemVisible(),"Inventory Item Visibility Error!");
+    }
+    @Test(groups = {"smoke", "regression"})
+    public void checkItemQtyOnItemCard(){
+        productPage.clickAddToCartButtonBackpack();
+        productPage.clickCartIcon();
+
+        Assert.assertEquals(cartPage.getItemQtyOnCard(),"1", "Item Count Is Wrong!");
+    }
 
 }
