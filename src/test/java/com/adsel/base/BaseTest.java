@@ -5,9 +5,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 
 public class BaseTest {
-    protected WebDriver driver;
+    public static WebDriver driver;
     protected LoginPage loginPage;
 
     @BeforeMethod(alwaysRun = true)
@@ -25,9 +26,18 @@ public class BaseTest {
         }
     }
 
-    protected void loginAsStandardUser(){
-        loginPage.enterUsername("standard_user");
-        loginPage.enterPassword("secret_sauce");
+    // reusable login method
+    protected void login(String username, String password){
+        loginPage.enterUsername(username);
+        loginPage.enterPassword(password);
         loginPage.clickLoginButton();
     }
+
+    // commonly used login
+    protected void loginAsStandardUser(){
+        login("standard_user","secret_sauce");
+    }
+
 }
+
+

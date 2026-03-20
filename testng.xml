@@ -1,0 +1,24 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="AutomationSuite">
+
+    <listeners>
+        <listener class-name="com.adsel.utils.ExtentListener"/>
+    </listeners>
+
+    <test name="FunctionalTests">
+
+        <groups>
+            <run>
+                <include name="smoke"/>
+                <include name="regression"/>
+            </run>
+        </groups>
+
+        <packages>
+            <package name="com.adsel.functional"/>
+        </packages>
+
+    </test>
+
+</suite>
